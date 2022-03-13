@@ -54,12 +54,7 @@ module.exports = {
 			}
 			const fixed = trunc.join('')
 
-
-			// console.log(fixed)
-			// console.log(data)
-			// console.log(`Total length is: ${total}`)
-			// console.log(`Diff is ${diff}`)
-
+			console.log(`Public: ${query}`)
 
 			if (damage && total < 2000) {
 				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);

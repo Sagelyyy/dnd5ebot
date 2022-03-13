@@ -49,10 +49,12 @@ module.exports = {
 			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
             let trunc = []
-            for (let i = 0; i < max - 100; i += 1) {
+            for (let i = 0; i < max - 200; i += 1) {
                 trunc.push(desc[i])
             }
             const fixed = trunc.join('')
+
+            console.log(`Epemeral: ${query}`)
 
             if (damage && total < 2000) {
                 interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);
