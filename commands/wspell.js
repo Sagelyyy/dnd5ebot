@@ -32,10 +32,34 @@ module.exports = {
 				}
 				return dmg.join('\t\t\t\t\t')
 			}
-			if(damage){
-				interaction.editReply({content: `**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `, ephemeral: true});
-			}else{
-				interaction.editReply({content: `**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`, ephemeral: true});
+
+            // Below is to deal with messages that are too long. Discord has a max character length of 2000.
+			// So we count the message length, and if it is greater than the max char length we cut the message
+			// off by 100 characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
+
+			let total = 0
+			const max = 2000
+			for(i=0;i<data.desc.length;i+=1){
+				let charSize = data.desc[i].length
+				total += charSize
+			}
+			const diff = total-max
+			const tooLong = ' Message cut off due to length...'
+	
+				let trunc = []
+			for(let i=0; i < max - 100 ;i+=1){
+				trunc.push(desc[i])
+			}
+			const fixed = trunc.join('')
+
+			if(damage && total < 2000){
+				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);
+			}else if(!damage && total < 2000){
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
+			}else if(damage && total > 2000){
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... ${tooLong}`}`);
+			}else if(!damage && total > 2000){
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}`);
 			}
 		}
 	},
