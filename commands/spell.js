@@ -39,15 +39,15 @@ module.exports = {
 
 			let total = 0
 			const max = 2000
-			for(i=0;i<data.desc.length;i+=1){
+			for (i = 0; i < data.desc.length; i += 1) {
 				let charSize = data.desc[i].length
 				total += charSize
 			}
-			const diff = total-max
+			const diff = total - max
 			const tooLong = ' Message cut off due to length...'
-	
-				let trunc = []
-			for(let i=0; i < max - 100 ;i+=1){
+
+			let trunc = []
+			for (let i = 0; i < max - 100; i += 1) {
 				trunc.push(desc[i])
 			}
 			const fixed = trunc.join('')
@@ -59,13 +59,13 @@ module.exports = {
 			// console.log(`Diff is ${diff}`)
 
 
-			if(damage && total < 2000){
+			if (damage && total < 2000) {
 				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);
-			}else if(!damage && total < 2000){
+			} else if (!damage && total < 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
-			}else if(damage && total > 2000){
-				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... ${tooLong}`}`);
-			}else if(!damage && total > 2000){
+			} else if (damage && total > 2000) {
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}`);
+			} else if (!damage && total > 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}`);
 			}
 		}
