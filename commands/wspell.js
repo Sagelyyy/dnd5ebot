@@ -45,6 +45,8 @@ module.exports = {
             }
             const diff = total - max
             const tooLong = ' Message cut off due to length...'
+            const webFilter = query.replace(/\s/g, "%20")
+			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
             let trunc = []
             for (let i = 0; i < max - 100; i += 1) {
@@ -56,11 +58,11 @@ module.exports = {
                 interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);
             } else if (!damage && total < 2000) {
                 interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
-            } else if (damage && total > 2000) {
-                interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}`);
-            } else if (!damage && total > 2000) {
-                interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}`);
-            }
+			} else if (damage && total > 2000) {
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+			} else if (!damage && total > 2000) {
+				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+			}
         }
     },
 };
