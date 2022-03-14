@@ -56,10 +56,7 @@ module.exports = {
 			}
 			const fixed = trunc.join('')
 
-            console.log(total)
-            const testingData = (`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`)
-            console.log(fixed)
-            console.log(testingData.length)
+
 
 			if (damage  || heal && total < 2000) {
 				interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
@@ -68,6 +65,11 @@ module.exports = {
 			} else if (damage || heal && total > 2000) {
 				interaction.editReply(`**${data.name}**\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			} else if (!damage  || !heal && total > 2000) {
+                console.log('not dmg or heal')
+                console.log(total)
+                const testingData = (`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`)
+                console.log(fixed)
+                console.log(`td: ${testingData.length}`)
 				interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			}
 		}
