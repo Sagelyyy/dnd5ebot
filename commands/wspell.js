@@ -50,7 +50,7 @@ module.exports = {
 			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
 			let trunc = []
-			for (let i = 0; i < max - 1000; i += 1) {
+			for (let i = 0; i < max - 1500; i += 1) {
 				trunc.push(desc[i])
 			}
 			const fixed = trunc.join('')
