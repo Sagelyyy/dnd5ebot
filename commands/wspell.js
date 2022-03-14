@@ -56,14 +56,8 @@ module.exports = {
 			}
 			const fixed = trunc.join('')
 
-			console.log(`Public: ${query}`)
-            console.log(diff, trunc.length)
-            console.log(`TOTAL: ${total}`)
+            console.log(total)
 
-            const testing = (`**${data.name}**:\n**School**: ${school} \n\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`)
-			
-			console.log(testing.length)
-			console.log(fixed.length)
 			if (damage  || heal && total < 2000) {
 				interaction.editReply(`**${data.name}**:\n**School**: ${school}\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
 			} else if (!damage || !heal && total < 2000) {
