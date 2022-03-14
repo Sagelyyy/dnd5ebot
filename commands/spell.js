@@ -58,7 +58,7 @@ module.exports = {
 			console.log(`Public: ${query}`)
 
 			if (damage  || heal && total < 2000) {
-				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
+				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
 			} else if (!damage || !heal && total < 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
 			} else if (damage || heal && total > 2000) {
