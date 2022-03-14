@@ -21,12 +21,13 @@ module.exports = {
 		} else {
 			const data = await file.json()
 			const damage = data?.damage?.damage_at_slot_level
+			const heal = data?.heal_at_slot_level
 			const desc = data.desc.join('\n\n')
-			const damageData = () => {
+			const spellData = (spell) => {
 				let dmg = []
-				for (const key in damage) {
-					if (Object.hasOwnProperty.call(damage, key)) {
-						const element = damage[key];
+				for (const key in spell) {
+					if (Object.hasOwnProperty.call(spell, key)) {
+						const element = spell[key];
 						dmg.push(`**${key}**: ${element} \n`)
 					}
 				}
@@ -56,13 +57,13 @@ module.exports = {
 
 			console.log(`Public: ${query}`)
 
-			if (damage && total < 2000) {
-				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${damageData()} `);
-			} else if (!damage && total < 2000) {
+			if (damage  || heal && total < 2000) {
+				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n **Damage**: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
+			} else if (!damage || !heal && total < 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
-			} else if (damage && total > 2000) {
+			} else if (damage || heal && total > 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-			} else if (!damage && total > 2000) {
+			} else if (!damage  || !heal && total > 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			}
 		}
