@@ -23,7 +23,6 @@ module.exports = {
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
             const desc = data.desc.join('\n\n')
-            const damageData = () => {
                 const spellData = (spell) => {
                     let dmg = []
                     for (const key in spell) {
@@ -34,7 +33,6 @@ module.exports = {
                     }
                     return dmg.join('\t\t\t\t\t')
                 }
-            }
             // Below is to deal with messages that are too long. Discord has a max character length of 2000.
             // So we count the message length, and if it is greater than the max char length we cut the message
             // off by 100 characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
