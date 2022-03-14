@@ -58,6 +58,7 @@ module.exports = {
 
 			console.log(`Public: ${query}`)
             console.log(diff, trunc.length)
+            console.log(`TOTAL: ${total}`)
 
             const testing = (`**${data.name}**:\n**School**: ${school} \n\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`)
 			
