@@ -36,7 +36,7 @@ module.exports = {
                 }
             // Below is to deal with messages that are too long. Discord has a max character length of 2000.
             // So we count the message length, and if it is greater than the max char length we cut the message
-            // off by 100 characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
+            // off by a number of characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
 
             let total = 0
             const max = 2000
@@ -46,11 +46,12 @@ module.exports = {
             }
             const diff = total - max
             const tooLong = ' Message cut off due to length...'
+            // if too long, we need to add the %20 for spaces in the web address
             const webFilter = query.replace(/\s/g, "%20")
 			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
 			let trunc = []
-			for (let i = 0; i < max - 1500; i += 1) {
+			for (let i = 0; i < max - 1900; i += 1) {
 				trunc.push(desc[i])
 			}
 			const fixed = trunc.join('')
