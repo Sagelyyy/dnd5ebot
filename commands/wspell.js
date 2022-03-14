@@ -51,7 +51,7 @@ module.exports = {
 			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
 			let trunc = []
-			for (let i = 0; i < max - 1900; i += 1) {
+			for (let i = 0; i < max - 700; i += 1) {
 				trunc.push(desc[i])
 			}
 			const fixed = trunc.join('')
@@ -77,24 +77,6 @@ module.exports = {
                     interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 }
             }
-
-			// if (damage  || heal && total < 2000) {
-            //     console.log(`TOTAL: ${total}`)
-            //     console.log('dmg or heal less')
-			// 	interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
-			// } else if (!damage || !heal && total < 2000) {
-            //     console.log(`TOTAL: ${total}`)
-            //     console.log('!dmg or !heal less')
-            //     interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc}`);
-			// } else if (damage || heal && total > 2000) {
-            //     console.log(`TOTAL: ${total}`)
-            //     console.log('dmg or heal great')
-            //     interaction.editReply(`**${data.name}**\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-			// } else if (!damage  || !heal && total > 2000) {
-            //     console.log(`TOTAL: ${total}`)
-            //     console.log('!dmg or !heal greater')
-			// 	interaction.editReply(`**${data.name}**:\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-			// }
 		}
 	},
 };
