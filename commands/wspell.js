@@ -34,7 +34,7 @@ module.exports = {
                     }
                     return dmg.join('\t\t\t\t\t')
                 }
-
+            }
             // Below is to deal with messages that are too long. Discord has a max character length of 2000.
             // So we count the message length, and if it is greater than the max char length we cut the message
             // off by 100 characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
@@ -50,13 +50,13 @@ module.exports = {
             const webFilter = query.replace(/\s/g, "%20")
 			const tooLongWeb = `https://5e.tools/spells.html#${webFilter}_phb`
 
-            let trunc = []
-            for (let i = 0; i < max - 200; i += 1) {
-                trunc.push(desc[i])
-            }
-            const fixed = trunc.join('')
+			let trunc = []
+			for (let i = 0; i < max - 500; i += 1) {
+				trunc.push(desc[i])
+			}
+			const fixed = trunc.join('')
 
-            console.log(`Epemeral: ${query}`)
+			console.log(`Public: ${query}`)
 
 			if (damage  || heal && total < 2000) {
 				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
@@ -67,6 +67,6 @@ module.exports = {
 			} else if (!damage  || !heal && total > 2000) {
 				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			}
-        }
-    },
+		}
+	},
 };
