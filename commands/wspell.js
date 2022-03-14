@@ -23,6 +23,7 @@ module.exports = {
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
             const desc = data.desc.join('\n\n')
+            const school = data?.school?.name
                 const spellData = (spell) => {
                     let dmg = []
                     for (const key in spell) {
@@ -57,13 +58,13 @@ module.exports = {
 			console.log(`Public: ${query}`)
 
 			if (damage  || heal && total < 2000) {
-				interaction.editReply(`**${data.name}**:  \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
+				interaction.editReply(`**${data.name}**:\n**School**: ${school}\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal): spellData(damage)} `);
 			} else if (!damage || !heal && total < 2000) {
-				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
+				interaction.editReply(`**${data.name}**:\n**School**: ${school}\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${desc}`);
 			} else if (damage || heal && total > 2000) {
-				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+				interaction.editReply(`**${data.name}**:\n**School**: ${school}\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			} else if (!damage  || !heal && total > 2000) {
-				interaction.editReply(`**${data.name}**: \n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+				interaction.editReply(`**${data.name}**:\n**School**: ${school} \n\n**Range**: ${data.range} \n**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
 			}
 		}
 	},
