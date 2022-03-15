@@ -13,6 +13,7 @@ module.exports = {
 	async execute(interaction) {
 		await interaction.deferReply();
 		const query = interaction.options.getString('query');
+		//filter out spaces in the input and replace it with -
 		const filtered = query.replace(/\s/g, "-")
 		const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
 		const file = await fetch(url)
