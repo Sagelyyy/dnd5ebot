@@ -5,8 +5,8 @@ const unlistedSpellData = require('../unlistedSpells')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('wspell')
-        .setDescription('Whisper spell info to you.')
+        .setName(' nspell')
+        .setDescription('Testing for unlisted spells.')
         .addStringOption(option =>
             option.setName('query')
                 .setDescription('Whisper spell info to you.')
@@ -17,8 +17,20 @@ module.exports = {
         const filtered = query.replace(/\s/g, "-")
         const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
         const file = await fetch(url)
+
+        const localSpellQuery = (spell) => {
+            for (let i = 0; i < unlistedSpellData.length; i += 1) {
+                if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
+                    console.log(unlistedSpellData[i].desc)
+                }
+            }
+        }
+
         if (!file.ok) {
+            const newSpell = localSpellQuery(query)
+            if (!newSpell) {
                interaction.editReply(`**Spell Not Found!**`);
+            }
         } else {
             const data = await file.json()
             const damage = data?.damage?.damage_at_slot_level
@@ -58,7 +70,7 @@ module.exports = {
             }
             const fixed = trunc.join('')
 
-            console.log(`Ephemeral: ${query}`)
+            console.log(`nspell Ephemeral: ${query}`)
 
             if (total < 2000) {
                 if (damage || heal) {
