@@ -3,39 +3,39 @@ const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
 const unlistedSpellData = require('../unlistedSpells')
 
+// for fetching our local spells stored in UnlistedSpells.js
+
+const localSpellQuery = async (spell) => {
+    for (let i = 0; i < unlistedSpellData.length; i += 1) {
+        if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
+            return (unlistedSpellData[i])
+        }
+    }
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(' nspell')
+        .setName('nspell')
         .setDescription('Testing for unlisted spells.')
         .addStringOption(option =>
             option.setName('query')
-                .setDescription('Whisper spell info to you.')
+                .setDescription('Testing for unlisted spells.')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
         const query = interaction.options.getString('query');
+        const newSpell = localSpellQuery(query)
         const filtered = query.replace(/\s/g, "-")
         const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
         const file = await fetch(url)
 
-        const localSpellQuery = (spell) => {
-            for (let i = 0; i < unlistedSpellData.length; i += 1) {
-                if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
-                    console.log(unlistedSpellData[i].desc)
-                }
-            }
-        }
-
-        if (!file.ok) {
-            const newSpell = localSpellQuery(query)
-            if (!newSpell) {
-               interaction.editReply(`**Spell Not Found!**`);
-            }
+        if (!file.ok && !newSpell) {
+            interaction.editReply(`**Spell Not Found!**`);
         } else {
-            const data = await file.json()
+            const data = file.ok ? await file.json() : await newSpell
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
-            const desc = data.desc.join('\n\n')
+            const desc = data?.desc?.join('\n\n')
             const school = data?.school?.name
 
             const spellData = (spell) => {

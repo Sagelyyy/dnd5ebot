@@ -1,7 +1,11 @@
 const unlistedSpellData=[
 	{
+		"school":{
+			"index":"bard",
+			"name": "Bard"
+		},
 		"index": "bardic-inspiration-d6",
-		"name": "Bardic Inspiration (d6)",
+		"name": "Bardic Inspiration",
 		"level": 1,
 		"prerequisites": [],
 		"desc": [
@@ -9,7 +13,8 @@ const unlistedSpellData=[
 			"You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ",
 			"Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level."
 		],
-		"url": "/api/features/bardic-inspiration-d6"
+		"range": "60 feet",
+		"duration": "10 minutes"
 	},
 	{
 		"school":{
@@ -25,3 +30,5 @@ const unlistedSpellData=[
 		"duration": "Concentraion, up to 1 minute"
 	}
 ]
+
+module.exports = unlistedSpellData;

@@ -1,6 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
+const unlistedSpellData = require('../unlistedSpells')
+
+// for fetching our local spells stored in UnlistedSpells.js
+
+const localSpellQuery = async (spell) => {
+	for (let i = 0; i < unlistedSpellData.length; i += 1) {
+		if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
+			return (unlistedSpellData[i])
+		}
+	}
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,20 +22,23 @@ module.exports = {
 				.setDescription('spell information')
 				.setRequired(true)),
 	async execute(interaction) {
-		await interaction.deferReply();
+		await interaction.deferReply({ ephemeral: true });
 		const query = interaction.options.getString('query');
-		//filter out spaces in the input and replace it with -
+		const newSpell = await localSpellQuery(query)
+		// for filtering out spaces in the users input
 		const filtered = query.replace(/\s/g, "-")
 		const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
 		const file = await fetch(url)
-		if (!file.ok) {
+
+		if (!file.ok && !newSpell) {
 			interaction.editReply(`**Spell Not Found!**`);
 		} else {
-			const data = await file.json()
+			const data = file.ok ? await file.json() : await newSpell
 			const damage = data?.damage?.damage_at_slot_level
 			const heal = data?.heal_at_slot_level
-			const desc = data.desc.join('\n\n')
+			const desc = data?.desc?.join('\n\n')
 			const school = data?.school?.name
+
 			const spellData = (spell) => {
 				let dmg = []
 				for (const key in spell) {
@@ -60,19 +74,19 @@ module.exports = {
 
 			console.log(`Public: ${query}`)
 
-            if (total < 2000) {
-                if (damage || heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
-                } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc}`);
-                }
-            } else if (total > 2000) {
-                if (damage || heal) {
-                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-                } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-                }
-            }
+			if (total < 2000) {
+				if (damage || heal) {
+					interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
+				} else if (!damage || !heal) {
+					interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc}`);
+				}
+			} else if (total > 2000) {
+				if (damage || heal) {
+					interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+				} else if (!damage || !heal) {
+					interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+				}
+			}
 		}
 	},
 };
