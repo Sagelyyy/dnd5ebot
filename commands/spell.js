@@ -22,7 +22,7 @@ module.exports = {
 				.setDescription('spell information')
 				.setRequired(true)),
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: false });
 		const query = interaction.options.getString('query');
 		const newSpell = await localSpellQuery(query)
 		// for filtering out spaces in the users input
