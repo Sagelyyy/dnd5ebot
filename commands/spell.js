@@ -38,6 +38,7 @@ module.exports = {
 			const heal = data?.heal_at_slot_level
 			const desc = data?.desc?.join('\n\n')
 			const school = data?.school?.name
+			const comp = data?.components
 
 			const spellData = (spell) => {
 				let dmg = []
