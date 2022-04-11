@@ -38,6 +38,7 @@ module.exports = {
             const heal = data?.heal_at_slot_level
             const desc = data?.desc?.join('\n\n')
             const school = data?.school?.name
+            const comp = data?.components
 
             const spellData = (spell) => {
                 let dmg = []
@@ -75,15 +76,15 @@ module.exports = {
 
             if (total < 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**:${comp} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc}`);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**:${comp} \n${desc}`);
                 }
             } else if (total > 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**:${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**:${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 }
             }
         }
