@@ -26,7 +26,7 @@ module.exports = {
         const query = interaction.options.getString('query');
         const newSpell = await localSpellQuery(query)
         // for filtering out spaces in the users input
-        const filtered = query.replace(/\s/g, "-")
+        const filtered = query.replace(/\s/g, "-").toLowerCase()
         const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
         const file = await fetch(url)
 
