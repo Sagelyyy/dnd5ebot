@@ -33,7 +33,7 @@ module.exports = {
         if (!file.ok && !newSpell) {
             interaction.editReply(`**Spell Not Found!**`);
         } else {
-			const data = file.ok ? await file.json() : await newSpell
+            const data = file.ok ? await file.json() : await newSpell
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
             const desc = data?.desc?.join('\n\n')
