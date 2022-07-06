@@ -1,4 +1,4 @@
-const unlistedSpellData = [
+const newUnlisted = [
     {
         "school": {
         "index": `8th-level necromancy`,
@@ -7895,3 +7895,5 @@ An affected creature is aware of the spell and can thus avoid answering question
 		"components": "Components: V, S"
 	}, 
 ]
+
+module.exports = newUnlisted

@@ -1,25 +1,28 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
-const unlistedSpellData = require('../new_unlisted')
+const newUnlisted = require('../new_unlisted')
 
 // for fetching our local spells stored in UnlistedSpells.js
 
 const localSpellQuery = async (spell) => {
-    for (let i = 0; i < unlistedSpellData.length; i += 1) {
-        if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
-            return (unlistedSpellData[i])
+    console.log('lsq!')
+    for (let i = 0; i < newUnlisted.length; i += 1) {
+        console.log(spell, newUnlisted[i].name)
+        if (spell === newUnlisted[i].name || spell === newUnlisted[i].name.toLowerCase()) {
+            return (newUnlisted[i])
         }
     }
 }
 
+
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('wspell')
-        .setDescription('Whisper spell info to you.')
+        .setName('nspell')
+        .setDescription('Command for testing.')
         .addStringOption(option =>
             option.setName('query')
-                .setDescription('Whisper spell info to you.')
+                .setDescription('Command for testing.')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
@@ -72,7 +75,7 @@ module.exports = {
             }
             const fixed = trunc.join('')
 
-            console.log(`Ephemeral: ${query}`)
+            console.log(`NSPELL: ${query}`)
 
             if (total < 2000) {
                 if (damage || heal) {
