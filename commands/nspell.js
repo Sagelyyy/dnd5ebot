@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
-const unlistedSpellData = require('../unlistedSpells')
+const unlistedSpellData = require('../new_unlisted')
 
 // for fetching our local spells stored in UnlistedSpells.js
 
@@ -15,16 +15,17 @@ const localSpellQuery = async (spell) => {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('nspell')
-        .setDescription('Testing for unlisted spells.')
+        .setName('wspell')
+        .setDescription('Whisper spell info to you.')
         .addStringOption(option =>
             option.setName('query')
-                .setDescription('Testing for unlisted spells.')
+                .setDescription('Whisper spell info to you.')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
-        const query = interaction.options.getString('query');
-        const newSpell = localSpellQuery(query)
+        const query = interaction.options.getString('query').toLowerCase();
+        const newSpell = await localSpellQuery(query)
+        // for filtering out spaces in the users input
         const filtered = query.replace(/\s/g, "-")
         const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
         const file = await fetch(url)
@@ -37,6 +38,7 @@ module.exports = {
             const heal = data?.heal_at_slot_level
             const desc = data?.desc?.join('\n\n')
             const school = data?.school?.name
+            const comp = data?.components
 
             const spellData = (spell) => {
                 let dmg = []
@@ -70,19 +72,19 @@ module.exports = {
             }
             const fixed = trunc.join('')
 
-            console.log(`nspell Ephemeral: ${query}`)
+            console.log(`Ephemeral: ${query}`)
 
             if (total < 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${desc}`);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc}`);
                 }
             } else if (total > 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 }
             }
         }
