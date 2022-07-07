@@ -40,6 +40,7 @@ module.exports = {
             const desc = data?.desc?.join('\n\n')
             const school = data?.school?.name
             const comp = data?.components
+			const uname = interaction.user.username
 
             const spellData = (spell) => {
                 let dmg = []
@@ -73,19 +74,19 @@ module.exports = {
             }
             const fixed = trunc.join('')
 
-            console.log(`SPELL: ${query}`)
+            console.log(`SPELL: ${uname}: ${query}`)
 
             if (total < 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
+                    interaction.editReply(`**${data.name}**:\n**Cast Time**: ${castTime}\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc} \n ${heal ? '**Healing**' : '**Damage**'}: \n\t\t\t\t\t${heal ? spellData(heal) : spellData(damage)} `);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc}`);
+                    interaction.editReply(`**${data.name}**:\n**Cast Time**: ${castTime}\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${desc}`);
                 }
             } else if (total > 2000) {
                 if (damage || heal) {
-                    interaction.editReply(`**${data.name}**\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**:\n**Cast Time**: ${castTime}\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 } else if (!damage || !heal) {
-                    interaction.editReply(`**${data.name}**:\n**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
+                    interaction.editReply(`**${data.name}**:\n**Cast Time**: ${castTime}\t**School**: ${school}\t**Range**: ${data.range} \t**Duration**: ${data.duration}\t**Components**: ${comp} \n${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
                 }
             }
         }
