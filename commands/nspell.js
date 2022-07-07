@@ -3,12 +3,8 @@ const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
 const newUnlisted = require('../new_unlisted')
 
-// for fetching our local spells stored in UnlistedSpells.js
-
 const localSpellQuery = async (spell) => {
-    console.log('lsq!')
     for (let i = 0; i < newUnlisted.length; i += 1) {
-        console.log(spell, newUnlisted[i].name)
         if (spell === newUnlisted[i].name || spell === newUnlisted[i].name.toLowerCase()) {
             return (newUnlisted[i])
         }
@@ -28,15 +24,17 @@ module.exports = {
         await interaction.deferReply({ ephemeral: true });
         const query = interaction.options.getString('query').toLowerCase();
         const newSpell = await localSpellQuery(query)
-        // for filtering out spaces in the users input
-        const filtered = query.replace(/\s/g, "-")
-        const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
-        const file = await fetch(url)
 
-        if (!file.ok && !newSpell) {
+        //##Legacy code for pulling from dnd5e api
+        // for filtering out spaces in the users input
+        // const filtered = query.replace(/\s/g, "-")
+        // const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
+        // const file = await fetch(url)
+
+        if (!newSpell) {
             interaction.editReply(`**Spell Not Found!**`);
         } else {
-            const data = file.ok ? await file.json() : await newSpell
+            const data = await newSpell
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
             const desc = data?.desc?.join('\n\n')

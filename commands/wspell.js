@@ -1,39 +1,40 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { DataManager } = require('discord.js');
 const fetch = require('node-fetch');
-const unlistedSpellData = require('../unlistedSpells')
-
-// for fetching our local spells stored in UnlistedSpells.js
+const newUnlisted = require('../new_unlisted')
 
 const localSpellQuery = async (spell) => {
-    for (let i = 0; i < unlistedSpellData.length; i += 1) {
-        if (spell === unlistedSpellData[i].name || spell === unlistedSpellData[i].name.toLowerCase()) {
-            return (unlistedSpellData[i])
+    for (let i = 0; i < newUnlisted.length; i += 1) {
+        if (spell === newUnlisted[i].name || spell === newUnlisted[i].name.toLowerCase()) {
+            return (newUnlisted[i])
         }
     }
 }
 
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('wspell')
-        .setDescription('Whisper spell info to you.')
+        .setDescription('Whisper spell information.')
         .addStringOption(option =>
             option.setName('query')
-                .setDescription('Whisper spell info to you.')
+                .setDescription('Whisper spell information.')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
         const query = interaction.options.getString('query').toLowerCase();
         const newSpell = await localSpellQuery(query)
-        // for filtering out spaces in the users input
-        const filtered = query.replace(/\s/g, "-")
-        const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
-        const file = await fetch(url)
 
-        if (!file.ok && !newSpell) {
+        //##Legacy code for pulling from dnd5e api
+        // for filtering out spaces in the users input
+        // const filtered = query.replace(/\s/g, "-")
+        // const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
+        // const file = await fetch(url)
+
+        if (!newSpell) {
             interaction.editReply(`**Spell Not Found!**`);
         } else {
-            const data = file.ok ? await file.json() : await newSpell
+            const data = await newSpell
             const damage = data?.damage?.damage_at_slot_level
             const heal = data?.heal_at_slot_level
             const desc = data?.desc?.join('\n\n')
@@ -72,7 +73,7 @@ module.exports = {
             }
             const fixed = trunc.join('')
 
-            console.log(`Ephemeral: ${query}`)
+            console.log(`WSPELL: ${query}`)
 
             if (total < 2000) {
                 if (damage || heal) {
