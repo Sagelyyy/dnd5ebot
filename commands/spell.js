@@ -40,6 +40,7 @@ module.exports = {
             const desc = data?.desc?.join('\n\n')
             const school = data?.school?.name
             const comp = data?.components
+            const castTime = data?.cast_time
 			const uname = interaction.user.username
 
             const spellData = (spell) => {
