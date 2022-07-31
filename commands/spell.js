@@ -21,7 +21,7 @@ module.exports = {
                 .setDescription('Get spell information.')
                 .setRequired(true)),
     async execute(interaction) {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
         const query = interaction.options.getString('query').toLowerCase();
         const newSpell = await localSpellQuery(query)
 
