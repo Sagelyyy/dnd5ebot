@@ -13,7 +13,7 @@ const itemQuery = async (spell) => {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('witem')
+        .setName('item')
         .setDescription('Get item information.')
         .addStringOption(option =>
             option.setName('query')
