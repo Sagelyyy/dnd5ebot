@@ -1,6 +1,6 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { DataManager } = require('discord.js');
-const fetch = require('node-fetch');
+const { SlashCommandBuilder, codeBlock } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
 const listData = require('../items')
 
 const itemQuery = async (spell) => {
@@ -24,54 +24,67 @@ module.exports = {
         const query = interaction.options.getString('query').toLowerCase();
         const itemData = await itemQuery(query)
 
-        //##Legacy code for pulling from dnd5e api
-        // for filtering out spaces in the users input
-        // const filtered = query.replace(/\s/g, "-")
-        // const url = (`https://www.dnd5eapi.co/api/spells/${filtered}`)
-        // const file = await fetch(url)
-
         if (!itemData) {
             interaction.editReply(`**Item Not Found!**`);
         } else {
             const data = await itemData
-            const desc = data?.desc?.join('\n\n')
-            const value = data?.value?.name
+            const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ")
+            const value = data?.value
             const type = data?.type
+            const itemTable = data?.table
+
             const uname = interaction.user.username
+            const userAvatar = interaction.user.avatarURL
 
-            // Below is to deal with messages that are too long. Discord has a max character length of 2000.
-            // So we count the message length, and if it is greater than the max char length we cut the message
-            // off by a number of characters, push it to a new array, and rejoin it, and let the player know with a message at the end. 
-
-            let total = 0
-            const max = 2000
-            for (i = 0; i < data.desc.length; i += 1) {
-                let charSize = data.desc[i].length
-                total += charSize
-            }
-            const diff = total - max
-            const tooLong = ' Message cut off due to length...'
-            // if too long, we need to add the %20 for spaces in the web address
             const webFilter = query.replace(/\s/g, "%20")
-            const tooLongWeb = `https://5e.tools/items.html#${webFilter}_egw`
+            const itemURL = `https://5e.tools/items.html#${webFilter}_egw`
 
-            let trunc = []
-            for (let i = 0; i < max - 700; i += 1) {
-                trunc.push(desc[i])
+            console.log(`ITEM: ${uname}: ${query}`)
+
+            const embedTable = new MessageEmbed()
+            .setColor(0x0099FF)
+            .setDescription(codeBlock(itemTable))
+
+        let parts = desc.match(/.{1,1000}(?:\s|$)/g)  || []
+
+        if (parts.length > 0) {
+            const embedArray = []
+            const initialItem = new MessageEmbed()
+                .setColor(0x0099FF)
+                .setTitle(data.name)
+                .setURL(itemURL)
+                .setAuthor({ name: uname, iconURL: userAvatar })
+                .addFields(
+                    { name: '\u200B', value: '**Misc: **' + value },
+                    { name: '\u200B', value: '**Description: **' + parts[0] },
+                )
+                .setDescription(`**Type:** ${type}`)
+            embedArray.push(initialItem)
+            for (let i = 1; i < parts.length; i += 1) {
+                const followupItem = new MessageEmbed()
+                    .setColor(0x0099FF)
+                    .setDescription(parts[i])
+                embedArray.push(followupItem)
             }
-            const fixed = trunc.join('')
 
-            console.log(`WITEM: ${uname}: ${query}`)
+            itemTable !== undefined ? embedArray.push(embedTable) : null
 
-            if (total < 2000) {
-                if(desc){
-                    interaction.editReply(`**${data.name}**:\n**Item Type**: ${type}\n**Description**: ${desc}\n**Misc Info**: ${data.value} `);
-                }else{
-                    interaction.editReply(`**${data.name}**:\n**Item Type**: ${type}\n**Misc Info**: ${data.value} `);
-                }
-            } else if (total > 2000) {
-                interaction.editReply(`**${data.name}**:\n**Item Type**: ${type}\n**Description**: ${`${fixed}.... **${tooLong}**`}\n**Goto ${tooLongWeb} For full the full description.**`);
-            }
+            await wait(200)
+            await interaction.followUp({ embeds: embedArray })
+        } else {
+            const itemEmbed = new MessageEmbed()
+            .setColor(0x0099FF)
+            .setTitle(data.name)
+            .setURL(itemURL)
+            .setAuthor({ name: uname, iconURL: userAvatar })
+            .addFields(
+                { name: '\u200B', value: '**Misc: **' + value },
+                parts.length > 0 ? { name: '\u200B', value: '**Description: **' + parts[0] } : { name: '\u200B', value: '**Description: ** Generic item'},
+            )
+            .setDescription(type)
+            interaction.editReply({ embeds: [itemEmbed] })
+        }
+
         }
     },
 };

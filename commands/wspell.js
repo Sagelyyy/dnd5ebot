@@ -47,8 +47,8 @@ module.exports = {
             console.log(`WSPELL: ${uname}: ${query}`)
 
             const embedTable = new MessageEmbed()
-            .setColor(0x0099FF)
-            .setDescription(codeBlock(spellTable))
+                .setColor(0x0099FF)
+                .setDescription(codeBlock(spellTable))
 
             let parts = desc.match(/.{1,1000}(?:\s|$)/g)
 
@@ -75,12 +75,11 @@ module.exports = {
                     embedArray.push(followupSpell)
                 }
 
-                    spellTable !== undefined ? embedArray.push(embedTable) : null
+                spellTable !== undefined ? embedArray.push(embedTable) : null
 
-                    await wait(200)
-                    await interaction.followUp({ embeds: embedArray })
+                await wait(200)
+                await interaction.followUp({ embeds: embedArray })
             } else {
-                console.log('parts < 0')
                 const spellEmbed = new MessageEmbed()
                     .setColor(0x0099FF)
                     .setTitle(data.name)
