@@ -44,6 +44,8 @@ module.exports = {
             const webFilter = query.replace(/\s/g, "%20")
             const spellURL = `https://5e.tools/spells.html#${webFilter}_phb`
 
+            console.log(`SPELL: ${uname}: ${query}`)
+
             const embedTable = new MessageEmbed()
             .setColor(0x0099FF)
             .setDescription(codeBlock(spellTable))
