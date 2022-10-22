@@ -864,20 +864,24 @@ A target must make a Dexterity saving throw. The target takes 10d8 lightning dam
 		"name": `Chaos Bolt`,
 		"desc": [
 			`You hurl an undulating, warbling mass of chaotic energy at one creature in range. Make a ranged spell attack against the target. On a hit, the target takes 2d8 + 1d6 damage. Choose one of the d8s. The number rolled on that die determines the attack's damage type, as shown below.
-Chaos Bolt
-d8 Damage Type
-1 Acid
-2 Cold
-3 Fire
-4 Force
-5 Lightning
-6 Poison
-7 Psychic
-8 Thunder
 If you roll the same number on both d8s, the chaotic energy leaps from the target to a different creature of your choice within 30 feet of it. Make a new attack roll against the new target, and make a new damage roll, which could cause the chaotic energy to leap again.
 A creature can be targeted only once by each casting of this spell.
 **At Higher Levels:** When you cast this spell using a spell slot of 2nd level or higher, each target takes 1d6 extra damage of the type rolled for each slot level above 1st.`
 		],
+		"table": `
+		Chaos Bolt    
+	 ---------------- 
+	  d8 Damage Type  
+	  1 Acid          
+	  2 Cold          
+	  3 Fire          
+	  4 Force         
+	  5 Lightning     
+	  6 Poison        
+	  7 Psychic       
+	  8 Thunder       
+	
+	`,
 		"cast_time": "1 action",
 		"range": "120 feet",
 		"duration": "Instantaneous",
@@ -5007,14 +5011,37 @@ Similarly, this spell doesn't directly affect plant growth. The moved earth carr
 		},
 		"name": `Nathair's Mischief`,
 		"desc": [
-			`You fill a 20-foot cube you can see within range with fey and draconic magic. Roll on the Mischievous Surge table to determine the magical effect produced, and roll again at the start of each of your turns until the spell ends. You can move the cube up to 10 feet before you roll.
-Mischievous Surge
-d4 Effect
-1 The smell of apple pie fills the air, and each creature in the cube must succeed on a Wisdom saving throw or become charmed by you until the start of your next turn.
-2 Bouquets of flowers appear all around, and each creature in the cube must succeed on a Dexterity saving throw or be blinded until the start of your next turn as the flowers spray water in their faces.
-3 Each creature in the cube must succeed on a Wisdom saving throw or begin giggling until the start of your next turn. A giggling creature is incapacitated and uses all its movement to move in a random direction.
-4 Drops of molasses hover in the cube, making it difficult terrain until the start of your next turn.`
+			`You fill a 20-foot cube you can see within range with fey and draconic magic. Roll on the Mischievous Surge table to determine the magical effect produced, and roll again at the start of each of your turns until the spell ends. You can move the cube up to 10 feet before you roll.`
 		],
+		"table": `
+		Mischievous Surge                                                                                                                                                                                                     
+	   ----------------------------------------
+		d4 Effect                                                                                                                                                                                                             
+		1 The smell of apple pie fills the air, 
+			and each creature in the cube must 
+			succeed on a Wisdom saving throw or 
+			become charmed by you until the start 
+			of your next turn. 
+
+		2 Bouquets of flowers appear all around, 
+			and each creature in the cube must 
+			succeed on a Dexterity saving throw 
+			or be blinded until the start of your 
+			next turn as the flowers spray water 
+			in their faces.
+
+		3 Each creature in the cube must succeed 
+			on a Wisdom saving throw or begin 
+			giggling until the start of your next 
+			turn. A giggling creature is 
+			incapacitated and uses all its 
+			movement to move in a random 
+			direction.
+
+		4 Drops of molasses hover in the cube, 
+			making it difficult terrain until 
+			the start of your next turn.                                                                                                                 
+	  `,
 		"cast_time": "1 action",
 		"range": "60 feet",
 		"duration": "Concentration, up to 1 minute",
@@ -5728,24 +5755,27 @@ The target's severed body members (fingers, legs, tails, and so on), if any, are
 		"desc": [
 			`You touch a dead humanoid or a piece of a dead humanoid. Provided that the creature has been dead no longer than 10 days, the spell forms a new adult body for it and then calls the soul to enter that body. If the target's soul isn't free or willing to do so, the spell fails.
 The magic fashions a new body for the creature to inhabit, which likely causes the creature's race to change. The DM rolls a d100 and consults the following table to determine what form the creature takes when restored to life, or the DM chooses a form.
-Reincarnate Races
-d100 Race
-01-04 Dragonborn
-05-13 Dwarf, hill
-14-21 Dwarf, mountain
-22-25 Elf, dark
-26-34 Elf, high
-35-42 Elf, wood
-43-46 Gnome, forest
-47-52 Gnome, rock
-53-56 Half-elf
-57-60 Half-orc
-61-68 Halfling, lightfoot
-69-76 Halfling, stout
-77-96 Human
-97-00 Tiefling
 The reincarnated creature recalls its former life and experiences. It retains the capabilities it had in its original form, except it exchanges its original race for the new one and changes its racial traits accordingly.`
 		],
+		"table": `
+		Reincarnate Races          
+	   --------------------------- 
+		d100 Race                  
+		01-04 Dragonborn           
+		05-13 Dwarf, hill          
+		14-21 Dwarf, mountain      
+		22-25 Elf, dark            
+		26-34 Elf, high            
+		35-42 Elf, wood            
+		43-46 Gnome, forest        
+		47-52 Gnome, rock          
+		53-56 Half-elf             
+		57-60 Half-orc             
+		61-68 Halfling, lightfoot  
+		69-76 Halfling, stout      
+		77-96 Human                
+		97-00 Tiefling             
+	  `,
 		"cast_time": "1 hour",
 		"range": "Touch",
 		"duration": "Instantaneous",
@@ -6741,15 +6771,18 @@ As part of casting the spell, you can form a circle on the ground with the blood
 		"name": `Summon Lesser Demons`,
 		"desc": [
 			`You utter foul words, summoning demons from the chaos of the Abyss. Roll on the following table to determine what appears.
-d6 Demons Summoned
-1-2 Two demons of challenge rating 1 or lower
-3-4 Four demons of challenge rating 1/2 or lower
-5-6 Eight demons of challenge rating 1/4 or lower
 The DM chooses the demons, such as manes or dretches, and you choose the unoccupied spaces you can see within range where they appear. A summoned demon disappears when it drops to 0 hit points or when the spell ends.
 The demons are hostile to all creatures, including you. Roll initiative for the summoned demons as a group, which has its own turns. The demons pursue and attack the nearest non-demons to the best of their ability.
 As part of casting the spell, you can form a circle on the ground with the blood used as a material component. The circle is large enough to encompass your space. While the spell lasts, the summoned demons can't cross the circle or harm it, and they can't target anyone within it. Using the material component in this manner consumes it when the spell ends.
 **At Higher Levels:** When you cast this spell using a spell slot of 6th or 7th level, you summon twice as many demons. If you cast it using a spell slot of 8th or 9th level, you summon three times as many demons.`
 		],
+		"table": `
+		d6 Demons Summoned                                 
+	   --------------------------------------------------- 
+		1-2 Two demons of challenge rating 1 or lower      
+		3-4 Four demons of challenge rating 1/2 or lower   
+		5-6 Eight demons of challenge rating 1/4 or lower  
+	  `,
 		"cast_time": "1 action",
 		"range": "60 feet",
 		"duration": "Concentration, up to 1 hour",
@@ -6984,14 +7017,6 @@ Until the spell ends, you and the target can instantaneously share words, images
 			`This spell instantly transports you and up to eight willing creatures of your choice that you can see within range, or a single object that you can see within range, to a destination you select. If you target an object, it must be able to fit entirely inside a 10-foot cube, and it can't be held or carried by an unwilling creature.
 The destination you choose must be known to you, and it must be on the same plane of existence as you. Your familiarity with the destination determines whether you arrive there successfully. The DM rolls d100 and consults the table.
 Teleportation
-Familiarity Mishap Similar Area Off Target On Target
-Permanent circle — — — 01–100
-Associated object — — — 01–100
-Very familiar 01–05 06–13 14–24 25–100
-Seen casually 01–33 34–43 44–53 54–100
-Viewed once 01–43 44–53 54–73 74–100
-Description 01–43 44–53 54–73 74–100
-False destination 01–50 51–100 — —
 Familiarity. "Permanent circle" means a permanent teleportation circle whose sigil sequence you know. "Associated object" means that you possess an object taken from the desired destination within the last six months, such as a book from a wizard's library, bed linen from a royal suite, or a chunk of marble from a lich's secret tomb.
 "Very familiar" is a place you have been very often, a place you have carefully studied, or a place you can see when you cast the spell. "Seen casually" is someplace you have seen more than once but with which you aren't very familiar. "Viewed once" is a place you have seen once, possibly using magic. "Description" is a place whose location and appearance you know through someone else's description, perhaps from a map.
 "False destination" is a place that doesn't exist. Perhaps you tried to scry an enemy's sanctum but instead viewed an illusion, or you are attempting to teleport to a familiar location that no longer exists.
@@ -7000,6 +7025,17 @@ Off Target. You and your group (or the target object) appear a random distance a
 Similar Area. You and your group (or the target object) wind up in a different area that's visually or thematically similar to the target area. If you are heading for your home laboratory, for example, you might wind up in another wizard's laboratory or in an alchemical supply shop that has many of the same tools and implements as your laboratory. Generally, you appear in the closest similar place, but since the spell has no range limit, you could conceivably wind up anywhere on the plane.
 Mishap. The spell's unpredictable magic results in a difficult journey. Each teleporting creature (or the target object) takes 3d10 force damage, and the DM rerolls on the table to see where you wind up (multiple mishaps can occur, dealing damage each time).`
 		],
+		"table": 
+		`
+		Familiarity         Mishap   Similar Area   Off Target   On Target  
+		------------------- -------- -------------- ------------ ----------- 
+		 Permanent circle    —        —              —            01–100     
+		 Associated object   —        —              —            01–100     
+		 Very familiar       01–05    06–13          14–24        25–100     
+		 Seen casually       01–33    34–43          44–53        54–100     
+		 Viewed once         01–43    44–53          54–73        74–100     
+		 Description         01–43    44–53          54–73        74–100     
+		 False destination   01–50    51–100         —            —     `,
 		"cast_time": "1 action",
 		"range": "10 feet",
 		"duration": "Instantaneous",
