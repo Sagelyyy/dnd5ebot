@@ -36,6 +36,8 @@ module.exports = {
             const castTime = data?.cast_time
             const duration = data?.duration
             const spellTable = data?.table
+            const classes = data?.classes
+            const source = data?.source
 
             const uname = interaction.user.username
             const userAvatar = interaction.user.avatarURL
@@ -49,9 +51,9 @@ module.exports = {
                 .setColor(0x0099FF)
                 .setDescription(codeBlock(spellTable))
 
-            let parts = desc.match(/.{1,1000}(?:\s|$)/g)
+            let parts = desc.match(/.{1,1005}(?:\s|$)/g)
 
-            if (parts.length > 0) {
+            if (parts.length > 1) {
                 const embedArray = []
                 const initialSpell = new MessageEmbed()
                     .setColor(0x0099FF)
@@ -59,10 +61,10 @@ module.exports = {
                     .setURL(spellURL)
                     .setAuthor({ name: uname, iconURL: userAvatar })
                     .addFields(
-                        { name: '\u200B', value: '**Components: **' + comp, inline: true },
-                        { name: '\u200B', value: '**Range: **' + range, inline: true },
-                        { name: '\u200B', value: '**Casting Time: **' + castTime, inline: true },
-                        { name: '\u200B', value: '**Duration: **' + duration, inline: true },
+                        { name: '\u200B', value: comp, inline: true },
+                        { name: '\u200B', value: range, inline: true },
+                        { name: '\u200B', value: castTime, inline: true },
+                        { name: '\u200B', value: duration, inline: true },
                         { name: '\u200B', value: '**Description: **' + parts[0] },
                     )
                     .setDescription(school)
@@ -72,6 +74,13 @@ module.exports = {
                         .setColor(0x0099FF)
                         .setDescription(parts[i])
                     embedArray.push(followupSpell)
+                    if (i == parts.length - 1) {
+                        const followupSpell = new MessageEmbed()
+                            .setColor(0x0099FF)
+                            // .setDescription(parts[i])
+                            .setFooter({ text: `${classes}\n${source}` })
+                        embedArray.push(followupSpell)
+                    }
                 }
 
                 spellTable !== undefined ? embedArray.push(embedTable) : null
@@ -79,20 +88,28 @@ module.exports = {
                 await wait(200)
                 await interaction.followUp({ embeds: embedArray })
             } else {
+                const embedArr = []
                 const spellEmbed = new MessageEmbed()
                     .setColor(0x0099FF)
                     .setTitle(data.name)
                     .setURL(spellURL)
                     .setAuthor({ name: uname, iconURL: userAvatar })
                     .addFields(
-                        { name: '\u200B', value: '**Components: **' + comp },
-                        { name: '\u200B', value: '**Range: **' + range },
-                        { name: '\u200B', value: '**Casting Time: **' + castTime },
-                        { name: '\u200B', value: '**Duration: **' + duration },
-                        { name: '\u200B', value: '**Description: **' + desc },
+                        { name: '\u200B', value: comp },
+                        { name: '\u200B', value: range },
+                        { name: '\u200B', value: castTime },
+                        { name: '\u200B', value: duration },
+                        { name: '\u200B', value: desc },
                     )
                     .setDescription(school)
-                interaction.editReply({ embeds: [spellEmbed] })
+                    .setFooter({ text: `${classes}\n${source}` })
+
+                embedArr.push(spellEmbed)
+                spellTable !== undefined ? embedArr.push(embedTable) : null
+
+                await wait(200)
+                await interaction.editReply({ embeds: embedArr })
+
             }
 
         };
