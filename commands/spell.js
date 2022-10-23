@@ -95,10 +95,10 @@ module.exports = {
                     .setURL(spellURL)
                     .setAuthor({ name: uname, iconURL: userAvatar })
                     .addFields(
-                        { name: '\u200B', value: comp },
-                        { name: '\u200B', value: range },
-                        { name: '\u200B', value: castTime },
-                        { name: '\u200B', value: duration },
+                        { name: '\u200B', value: comp, inline: true },
+                        { name: '\u200B', value: range, inline: true },
+                        { name: '\u200B', value: castTime, inline: true },
+                        { name: '\u200B', value: duration, inline: true },
                         { name: '\u200B', value: desc },
                     )
                     .setDescription(school)
