@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, codeBlock } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const newUnlisted = require("../new_unlisted");
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
 
