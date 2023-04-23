@@ -40,6 +40,8 @@ module.exports = {
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
+      const uname = interaction.user.username;
+      console.log(`FAILED NSPELL: ${uname}: ${query}`);
       const suggestionsMessage =
         newSpell.suggestions.length > 0
           ? `Did you mean one of the following?\n**${newSpell.suggestions.join(

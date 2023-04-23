@@ -19,6 +19,8 @@ module.exports = {
     const query = interaction.options.getString("query").toLowerCase();
     const queryData = await localQuery(query, listData);
     if (!queryData.exact) {
+      const uname = interaction.user.username;
+      console.log(`FAILED WITEM: ${uname}: ${query}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0
           ? `Did you mean one of the following?\n**${queryData.suggestions.join(

@@ -20,6 +20,8 @@ module.exports = {
     const queryData = await localQuery(query, newUnlisted);
 
     if (!queryData.exact) {
+      const uname = interaction.user.username;
+      console.log(`FAILED SPELL: ${uname}: ${query}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0
           ? `Did you mean one of the following?\n**${queryData.suggestions.join(
