@@ -31,10 +31,12 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.isButton()) {
     const suggestionIndex = parseInt(interaction.customId.split("-")[1]);
     // Get the newSpell object by calling the command execute function
-    const newSpell = await client.commands.get("nspell").execute(interaction);
+    const newSpell = await client.commands
+      .get("nspell")
+      .execute(interaction, null, true);
     const query = newSpell.suggestions[suggestionIndex];
     // Call the command execute function with the clicked suggestion
-    await client.commands.get("nspell").execute(interaction, query);
+    await client.commands.get("nspell").execute(interaction, query, true);
     return;
   }
 
