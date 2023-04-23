@@ -39,7 +39,7 @@ module.exports = {
 
     if (!newSpell.exact) {
       interaction.editReply(
-        `**Spell Not Found!** Did you mean ${newSpell.suggestions}?`
+        `**Spell Not Found!** \n  Did you mean one of the following? \n **${newSpell.suggestions}**\n`
       );
     } else {
       const data = await newSpell.exact;
