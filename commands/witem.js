@@ -17,7 +17,7 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
     const query = interaction.options.getString("query").toLowerCase();
-    const itemData = await localQuery(query, listData);
+    const queryData = await localQuery(query, listData);
     if (!queryData.exact) {
       const suggestionsMessage =
         queryData.suggestions.length > 0
@@ -30,7 +30,7 @@ module.exports = {
         content: `**Spell Not Found!**\n${suggestionsMessage}`,
       });
     } else {
-      const data = await itemData;
+      const data = await queryData.exact;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
       const value = data?.value;
       const type = data?.type;

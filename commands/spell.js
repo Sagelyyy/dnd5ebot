@@ -17,12 +17,12 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: false });
     const query = interaction.options.getString("query").toLowerCase();
-    const newSpell = await localQuery(query, newUnlisted);
+    const queryData = await localQuery(query, newUnlisted);
 
-    if (!newSpell.exact) {
+    if (!queryData.exact) {
       const suggestionsMessage =
-        newSpell.suggestions.length > 0
-          ? `Did you mean one of the following?\n**${newSpell.suggestions.join(
+        queryData.suggestions.length > 0
+          ? `Did you mean one of the following?\n**${queryData.suggestions.join(
               "\n"
             )}**`
           : "No suggestions found. Please try a different search term.";
@@ -31,7 +31,7 @@ module.exports = {
         content: `**Spell Not Found!**\n${suggestionsMessage}`,
       });
     } else {
-      const data = await newSpell;
+      const data = await queryData.exact;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
       const school = data?.school?.name;
       const comp = data?.components;
