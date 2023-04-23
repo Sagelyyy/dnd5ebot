@@ -57,7 +57,7 @@ module.exports = {
       const webFilter = searchTerm.replace(/\s/g, "%20");
       const spellURL = `https://5e.tools/spells.html#${webFilter}_phb`;
 
-      console.log(`SPELL: ${uname}: ${query}`);
+      console.log(`SPELL: ${uname}: ${searchTerm}`);
 
       const embedTable = new MessageEmbed()
         .setColor(0x0099ff)

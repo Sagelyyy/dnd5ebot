@@ -52,7 +52,7 @@ module.exports = {
       const webFilter = searchTerm.replace(/\s/g, "%20");
       const itemURL = `https://5e.tools/items.html#${webFilter}_egw`;
 
-      console.log(`WITEM: ${uname}: ${query}`);
+      console.log(`WITEM: ${uname}: ${searchTerm}`);
 
       const embedTable = new MessageEmbed()
         .setColor(0x0099ff)
