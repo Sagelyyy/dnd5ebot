@@ -1,4 +1,4 @@
-export const queryData = async (spell, dataArray) => {
+const queryData = async (spell, dataArray) => {
   for (let i = 0; i < dataArray.length; i += 1) {
     if (
       spell === dataArray[i].name ||
@@ -8,3 +8,5 @@ export const queryData = async (spell, dataArray) => {
     }
   }
 };
+
+module.exports = queryData;
