@@ -4,7 +4,7 @@ const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
 
-export const newQuery = async (spell, dataArray) => {
+const newQuery = async (spell, dataArray) => {
   const searchTerm = spell.toLowerCase();
   const exactMatch = dataArray.find(
     (item) => item.name.toLowerCase() === searchTerm
