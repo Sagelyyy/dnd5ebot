@@ -1,6 +1,6 @@
 node_modules
 .env
 config.json
-../utils/items.js
-../utils/new_unlisted.js
-../utils/unlistedSpells.js
+utils/items.js
+utils/new_unlisted.js
+utils/unlistedSpells.js
