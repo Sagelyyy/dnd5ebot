@@ -29,14 +29,9 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand() && !interaction.isButton()) return;
 
   if (interaction.isButton()) {
-    const suggestionIndex = parseInt(interaction.customId.split("-")[1]);
-    // Get the newSpell object by calling the command execute function
-    const newSpell = await client.commands
-      .get("nspell")
-      .execute(interaction, null, true);
-    const query = newSpell.suggestions[suggestionIndex];
+    const [_, suggestionIndex, query] = interaction.customId.split("-");
     // Call the command execute function with the clicked suggestion
-    await client.commands.get("nspell").execute(interaction, query, true);
+    await client.commands.get("nspell").execute(interaction, query);
     return;
   }
 
