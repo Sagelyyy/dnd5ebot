@@ -16,7 +16,8 @@ const newQuery = async (spell, dataArray) => {
 
   const suggestions = dataArray
     .filter((item) => item.name.toLowerCase().includes(searchTerm))
-    .slice(0, 5); // Limit the number of suggestions to 5, you can adjust this number
+    .slice(0, 5) // Limit the number of suggestions to 5, you can adjust this number
+    .map((item) => item.name);
 
   return { exact: null, suggestions };
 };
@@ -37,7 +38,6 @@ module.exports = {
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
-      console.log(newSpell.suggestions);
       interaction.editReply(
         `**Spell Not Found!** Did you mean ${newSpell.suggestions}?`
       );
