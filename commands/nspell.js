@@ -3,6 +3,7 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
+const getSearchTerm = require("../utils/getSearchTerm");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,9 +19,7 @@ module.exports = {
   //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
   async execute(interaction, spell) {
     await interaction.deferReply({ ephemeral: true });
-    const searchTerm = spell
-      ? spell.toLowerCase()
-      : interaction.options.getString("query").toLowerCase();
+    const searchTerm = getSearchTerm(interaction, spell);
     const newSpell = await localQuery(searchTerm, newUnlisted);
 
     if (!newSpell.exact) {
