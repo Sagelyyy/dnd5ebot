@@ -21,6 +21,7 @@ module.exports = {
     const queryData = await localQuery(searchTerm, listData);
 
     if (!queryData.exact) {
+      const uname = interaction.user.username;
       console.log(`FAILED ITEM: ${uname}: ${searchTerm}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0

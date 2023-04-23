@@ -21,6 +21,7 @@ module.exports = {
     const queryData = await localQuery(searchTerm, newUnlisted);
 
     if (!queryData.exact) {
+      const uname = interaction.user.username;
       console.log(`FAILED WSPELL: ${uname}: ${searchTerm}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0
