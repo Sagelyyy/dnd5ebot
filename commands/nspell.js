@@ -1,11 +1,6 @@
-const {
-  SlashCommandBuilder,
-  codeBlock,
-  MessageActionRow,
-  MessageButton,
-} = require("@discordjs/builders");
+const { SlashCommandBuilder, codeBlock } = require("@discordjs/builders");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
-const { MessageEmbed } = require("discord.js");
 const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
