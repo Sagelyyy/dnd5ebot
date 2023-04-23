@@ -37,6 +37,7 @@ module.exports = {
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
+      console.log(newSpell.suggestions);
       interaction.editReply(
         `**Spell Not Found!** Did you mean ${newSpell.suggestions}?`
       );
