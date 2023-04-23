@@ -16,7 +16,7 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction, spell) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: false });
     const searchTerm = getSearchTerm(interaction, spell);
     const queryData = await localQuery(searchTerm, newUnlisted);
 
