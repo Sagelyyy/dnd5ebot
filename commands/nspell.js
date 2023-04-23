@@ -38,9 +38,13 @@ module.exports = {
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
-      interaction.editReply(
-        `**Spell Not Found!** \n  Did you mean one of the following? \n **${newSpell.suggestions}**\n`
-      );
+      const uname = interaction.user.username;
+      console.log(`FAILED WSPELL: ${uname}: ${query}`);
+      interaction.editReply({
+        content: `**Spell Not Found!**\nDid you mean one of the following?\n**${newSpell.suggestions.join(
+          "\n"
+        )}**`,
+      });
     } else {
       const data = await newSpell.exact;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
