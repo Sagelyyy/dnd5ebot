@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, codeBlock } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const wait = require("node:timers/promises").setTimeout;
-const listData = require("../items");
+const listData = require("../utils/items");
 const localQuery = require("../utils/index");
 
 // const itemQuery = async (spell) => {
