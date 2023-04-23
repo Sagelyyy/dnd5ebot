@@ -30,7 +30,7 @@ module.exports = {
 
       const buttons = newSpell.suggestions.map((suggestion, index) => {
         return new MessageButton()
-          .setCustomId(`suggestion-${index}-${suggestion}`)
+          .setCustomId(`nspell-suggestion-${index}-${suggestion}`)
           .setLabel(suggestion)
           .setStyle("PRIMARY");
       });
