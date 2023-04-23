@@ -28,7 +28,7 @@ module.exports = {
 
       const buttons = queryData.suggestions.map((suggestion, index) => {
         return new MessageButton()
-          .setCustomId(`nspell-suggestion-${index}-${suggestion}`)
+          .setCustomId(`wspell-suggestion-${index}-${suggestion}`)
           .setLabel(suggestion)
           .setStyle("PRIMARY");
       });
