@@ -30,7 +30,7 @@ module.exports = {
           : "No suggestions found. Please try a different search term.";
 
       interaction.editReply({
-        content: `**Spell Not Found!**\n${suggestionsMessage}`,
+        content: `**Spell **${query}** Not Found!\n${suggestionsMessage}`,
       });
     } else {
       const data = await queryData.exact;
