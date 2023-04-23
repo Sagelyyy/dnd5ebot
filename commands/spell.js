@@ -14,23 +14,29 @@ module.exports = {
         .setDescription("Get spell information.")
         .setRequired(true)
     ),
-  async execute(interaction) {
-    await interaction.deferReply({ ephemeral: false });
-    const query = interaction.options.getString("query").toLowerCase();
-    const queryData = await localQuery(query, newUnlisted);
+  async execute(interaction, spell) {
+    await interaction.deferReply({ ephemeral: true });
+    const searchTerm = getSearchTerm(interaction, spell);
+    const queryData = await localQuery(searchTerm, newUnlisted);
 
     if (!queryData.exact) {
-      const uname = interaction.user.username;
-      console.log(`FAILED SPELL: ${uname}: ${query}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0
-          ? `Did you mean one of the following?\n**${queryData.suggestions.join(
-              "\n"
-            )}**`
+          ? `Did you mean one of the following?`
           : "No suggestions found. Please try a different search term.";
 
-      interaction.editReply({
-        content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
+      const buttons = queryData.suggestions.map((suggestion, index) => {
+        return new MessageButton()
+          .setCustomId(`nspell-suggestion-${index}-${suggestion}`)
+          .setLabel(suggestion)
+          .setStyle("PRIMARY");
+      });
+
+      const row = new MessageActionRow().addComponents(buttons);
+
+      await interaction.editReply({
+        content: `Spell **${searchTerm}** Not Found!\n${suggestionsMessage}`,
+        components: queryData.suggestions.length > 0 ? [row] : [],
       });
     } else {
       const data = await queryData.exact;

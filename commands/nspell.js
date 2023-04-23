@@ -16,7 +16,6 @@ module.exports = {
         .setRequired(true)
     ),
 
-  //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
   async execute(interaction, spell) {
     await interaction.deferReply({ ephemeral: true });
     const searchTerm = getSearchTerm(interaction, spell);
