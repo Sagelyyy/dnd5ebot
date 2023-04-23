@@ -54,7 +54,7 @@ module.exports = {
       const uname = interaction.user.username;
       const userAvatar = interaction.user.avatarURL;
 
-      const webFilter = query.replace(/\s/g, "%20");
+      const webFilter = queryData.replace(/\s/g, "%20");
       const spellURL = `https://5e.tools/spells.html#${webFilter}_phb`;
 
       console.log(`SPELL: ${uname}: ${query}`);

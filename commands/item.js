@@ -49,7 +49,7 @@ module.exports = {
       const uname = interaction.user.username;
       const userAvatar = interaction.user.avatarURL;
 
-      const webFilter = query.replace(/\s/g, "%20");
+      const webFilter = queryData.replace(/\s/g, "%20");
       const itemURL = `https://5e.tools/items.html#${webFilter}_egw`;
 
       console.log(`ITEM: ${uname}: ${query}`);
