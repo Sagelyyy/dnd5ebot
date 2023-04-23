@@ -1,4 +1,10 @@
-const { SlashCommandBuilder, codeBlock } = require("@discordjs/builders");
+const {
+  SlashCommandBuilder,
+  codeBlock,
+  MessageActionRow,
+  MessageButton,
+} = require("@discordjs/builders");
+
 const { MessageEmbed } = require("discord.js");
 const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
@@ -34,23 +40,31 @@ module.exports = {
         .setDescription("Whisper spell information.")
         .setRequired(true)
     ),
+
+  //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
-    const query = interaction.options.getString("query").toLowerCase();
+    const query = query || interaction.options.getString("query").toLowerCase();
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
-      const uname = interaction.user.username;
-      console.log(`FAILED NSPELL: ${uname}: ${query}`);
       const suggestionsMessage =
         newSpell.suggestions.length > 0
-          ? `Did you mean one of the following?\n**${newSpell.suggestions.join(
-              "\n"
-            )}**`
+          ? `Did you mean one of the following?`
           : "No suggestions found. Please try a different search term.";
 
-      interaction.editReply({
+      const buttons = newSpell.suggestions.map((suggestion, index) => {
+        return new MessageButton()
+          .setCustomId(`suggestion-${index}`)
+          .setLabel(suggestion)
+          .setStyle("PRIMARY");
+      });
+
+      const row = new MessageActionRow().addComponents(buttons);
+
+      await interaction.editReply({
         content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
+        components: newSpell.suggestions.length > 0 ? [row] : [],
       });
     } else {
       const data = await newSpell.exact;
