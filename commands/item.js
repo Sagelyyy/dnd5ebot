@@ -4,14 +4,6 @@ const wait = require("node:timers/promises").setTimeout;
 const listData = require("../utils/items");
 const localQuery = require("../utils/index");
 
-// const itemQuery = async (spell) => {
-//     for (let i = 0; i < listData.length; i += 1) {
-//         if (spell === listData[i].name || spell === listData[i].name.toLowerCase()) {
-//             return (listData[i])
-//         }
-//     }
-// }
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("item")

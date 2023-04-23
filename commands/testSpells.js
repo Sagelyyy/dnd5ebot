@@ -4,25 +4,44 @@ const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
 
+export const newQuery = async (spell, dataArray) => {
+  const searchTerm = spell.toLowerCase();
+  const exactMatch = dataArray.find(
+    (item) => item.name.toLowerCase() === searchTerm
+  );
+
+  if (exactMatch) {
+    return { exact: exactMatch, suggestions: [] };
+  }
+
+  const suggestions = dataArray
+    .filter((item) => item.name.toLowerCase().includes(searchTerm))
+    .slice(0, 5); // Limit the number of suggestions to 5, you can adjust this number
+
+  return { exact: null, suggestions };
+};
+
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("spell")
-    .setDescription("Get spell information.")
+    .setName("wspell")
+    .setDescription("Whisper spell information.")
     .addStringOption((option) =>
       option
         .setName("query")
-        .setDescription("Get spell information.")
+        .setDescription("Whisper spell information.")
         .setRequired(true)
     ),
   async execute(interaction) {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply({ ephemeral: true });
     const query = interaction.options.getString("query").toLowerCase();
-    const newSpell = await localQuery(query, newUnlisted);
+    const newSpell = await newQuery(query, newUnlisted);
 
-    if (!newSpell) {
-      interaction.editReply(`**Spell Not Found!**`);
+    if (!newSpell.exact) {
+      interaction.editReply(
+        `**Spell Not Found!** Did you mean ${suggestions}?`
+      );
     } else {
-      const data = await newSpell;
+      const data = await newSpell.exact;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
       const school = data?.school?.name;
       const comp = data?.components;
@@ -39,7 +58,7 @@ module.exports = {
       const webFilter = query.replace(/\s/g, "%20");
       const spellURL = `https://5e.tools/spells.html#${webFilter}_phb`;
 
-      console.log(`SPELL: ${uname}: ${query}`);
+      console.log(`WSPELL: ${uname}: ${query}`);
 
       const embedTable = new MessageEmbed()
         .setColor(0x0099ff)
