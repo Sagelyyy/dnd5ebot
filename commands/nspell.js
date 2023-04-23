@@ -42,10 +42,11 @@ module.exports = {
     ),
 
   //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
-  async execute(interaction) {
+  async execute(interaction, query = null) {
     await interaction.deferReply({ ephemeral: true });
-    const query = query || interaction.options.getString("query").toLowerCase();
-    const newSpell = await newQuery(query, newUnlisted);
+    const searchTerm =
+      query || interaction.options.getString("query").toLowerCase();
+    const newSpell = await newQuery(searchTerm, newUnlisted);
 
     if (!newSpell.exact) {
       const suggestionsMessage =
