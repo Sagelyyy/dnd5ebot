@@ -16,10 +16,10 @@ module.exports = {
     ),
 
   //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
-  async execute(interaction, query = null, isButton = false) {
+  async execute(interaction, spell) {
     await interaction.deferReply({ ephemeral: true });
-    const searchTerm = isButton
-      ? query
+    const searchTerm = spell
+      ? spell.toLowerCase()
       : interaction.options.getString("query").toLowerCase();
     const newSpell = await localQuery(searchTerm, newUnlisted);
 
