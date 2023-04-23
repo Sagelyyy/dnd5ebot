@@ -21,6 +21,7 @@ module.exports = {
     const queryData = await localQuery(searchTerm, newUnlisted);
 
     if (!queryData.exact) {
+      console.log(`FAILED WSPELL: ${uname}: ${searchTerm}`);
       const suggestionsMessage =
         queryData.suggestions.length > 0
           ? `Did you mean one of the following?`
