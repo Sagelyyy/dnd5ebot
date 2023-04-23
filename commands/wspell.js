@@ -19,8 +19,17 @@ module.exports = {
     const query = interaction.options.getString("query").toLowerCase();
     const newSpell = await localQuery(query, newUnlisted);
 
-    if (!newSpell) {
-      interaction.editReply(`**Spell Not Found!**`);
+    if (!queryData.exact) {
+      const suggestionsMessage =
+        queryData.suggestions.length > 0
+          ? `Did you mean one of the following?\n**${queryData.suggestions.join(
+              "\n"
+            )}**`
+          : "No suggestions found. Please try a different search term.";
+
+      interaction.editReply({
+        content: `**Spell Not Found!**\n${suggestionsMessage}`,
+      });
     } else {
       const data = await newSpell;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
