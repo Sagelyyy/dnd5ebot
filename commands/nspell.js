@@ -16,7 +16,7 @@ module.exports = {
     ),
 
   //content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
-  async execute(interaction) {
+  async execute(interaction, query = null) {
     await interaction.deferReply({ ephemeral: true });
     const searchTerm = interaction.options.getString("query").toLowerCase();
     const newSpell = await localQuery(searchTerm, newUnlisted);
@@ -124,5 +124,6 @@ module.exports = {
         await interaction.editReply({ embeds: embedArr });
       }
     }
+    return newSpell;
   },
 };
