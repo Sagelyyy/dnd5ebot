@@ -23,7 +23,7 @@ const newQuery = async (spell, dataArray) => {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("testSpell")
+    .setName("nspell")
     .setDescription("Spell testing command.")
     .addStringOption((option) =>
       option
