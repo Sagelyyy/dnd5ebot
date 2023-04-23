@@ -5,9 +5,9 @@ const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
 
 const newQuery = async (spell, dataArray) => {
-  const searchTerm = spell.toLowerCase();
+  const searchTerm = spell.toLowerCase().replace(/'/g, "");
   const exactMatch = dataArray.find(
-    (item) => item.name.toLowerCase() === searchTerm
+    (item) => item.name.toLowerCase().replace(/'/g, "") === searchTerm
   );
 
   if (exactMatch) {
@@ -15,7 +15,9 @@ const newQuery = async (spell, dataArray) => {
   }
 
   const suggestions = dataArray
-    .filter((item) => item.name.toLowerCase().includes(searchTerm))
+    .filter((item) =>
+      item.name.toLowerCase().replace(/'/g, "").includes(searchTerm)
+    )
     .slice(0, 5) // Limit the number of suggestions to 5, you can adjust this number
     .map((item) => item.name);
 
@@ -38,12 +40,15 @@ module.exports = {
     const newSpell = await newQuery(query, newUnlisted);
 
     if (!newSpell.exact) {
-      const uname = interaction.user.username;
-      console.log(`FAILED WSPELL: ${uname}: ${query}`);
+      const suggestionsMessage =
+        newSpell.suggestions.length > 0
+          ? `Did you mean one of the following?\n**${newSpell.suggestions.join(
+              "\n"
+            )}**`
+          : "No suggestions found. Please try a different search term.";
+
       interaction.editReply({
-        content: `**Spell Not Found!**\nDid you mean one of the following?\n**${newSpell.suggestions.join(
-          "\n"
-        )}**`,
+        content: `**Spell Not Found!**\n${suggestionsMessage}`,
       });
     } else {
       const data = await newSpell.exact;
