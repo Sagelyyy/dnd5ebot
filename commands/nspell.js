@@ -1,29 +1,8 @@
 const { SlashCommandBuilder, codeBlock } = require("@discordjs/builders");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-
 const wait = require("node:timers/promises").setTimeout;
 const newUnlisted = require("../utils/new_unlisted");
 const localQuery = require("../utils/index");
-
-const newQuery = async (spell, dataArray) => {
-  const searchTerm = spell.toLowerCase().replace(/'/g, "");
-  const exactMatch = dataArray.find(
-    (item) => item.name.toLowerCase().replace(/'/g, "") === searchTerm
-  );
-
-  if (exactMatch) {
-    return { exact: exactMatch, suggestions: [] };
-  }
-
-  const suggestions = dataArray
-    .filter((item) =>
-      item.name.toLowerCase().replace(/'/g, "").includes(searchTerm)
-    )
-    .slice(0, 5) // Limit the number of suggestions to 5, you can adjust this number
-    .map((item) => item.name);
-
-  return { exact: null, suggestions };
-};
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -41,7 +20,7 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true });
     const searchTerm =
       query || interaction.options.getString("query").toLowerCase();
-    const newSpell = await newQuery(searchTerm, newUnlisted);
+    const newSpell = await localQuery(searchTerm, newUnlisted);
 
     if (!newSpell.exact) {
       const suggestionsMessage =
