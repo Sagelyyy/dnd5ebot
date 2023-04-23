@@ -38,7 +38,7 @@ module.exports = {
       const row = new MessageActionRow().addComponents(buttons);
 
       await interaction.editReply({
-        content: `Spell **${searchTerm}** Not Found!\n${suggestionsMessage}`,
+        content: `Item **${searchTerm}** Not Found!\n${suggestionsMessage}`,
         components: queryData.suggestions.length > 0 ? [row] : [],
       });
     } else {
