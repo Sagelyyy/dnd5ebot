@@ -37,7 +37,7 @@ module.exports = {
       const row = new MessageActionRow().addComponents(buttons);
 
       await interaction.editReply({
-        content: `Spell **${query}** Not Found!\n${suggestionsMessage}`,
+        content: `Spell **${searchTerm}** Not Found!\n${suggestionsMessage}`,
         components: newSpell.suggestions.length > 0 ? [row] : [],
       });
     } else {
@@ -55,10 +55,10 @@ module.exports = {
       const uname = interaction.user.username;
       const userAvatar = interaction.user.avatarURL;
 
-      const webFilter = query.replace(/\s/g, "%20");
+      const webFilter = searchTerm.replace(/\s/g, "%20");
       const spellURL = `https://5e.tools/spells.html#${webFilter}_phb`;
 
-      console.log(`WSPELL: ${uname}: ${query}`);
+      console.log(`WSPELL: ${uname}: ${searchTerm}`);
 
       const embedTable = new MessageEmbed()
         .setColor(0x0099ff)
