@@ -19,15 +19,15 @@ module.exports = {
   async execute(interaction, spell) {
     await interaction.deferReply({ ephemeral: true });
     const searchTerm = getSearchTerm(interaction, spell);
-    const newSpell = await localQuery(searchTerm, newUnlisted);
+    const queryData = await localQuery(searchTerm, newUnlisted);
 
-    if (!newSpell.exact) {
+    if (!queryData.exact) {
       const suggestionsMessage =
-        newSpell.suggestions.length > 0
+        queryData.suggestions.length > 0
           ? `Did you mean one of the following?`
           : "No suggestions found. Please try a different search term.";
 
-      const buttons = newSpell.suggestions.map((suggestion, index) => {
+      const buttons = queryData.suggestions.map((suggestion, index) => {
         return new MessageButton()
           .setCustomId(`nspell-suggestion-${index}-${suggestion}`)
           .setLabel(suggestion)
@@ -38,10 +38,10 @@ module.exports = {
 
       await interaction.editReply({
         content: `Spell **${searchTerm}** Not Found!\n${suggestionsMessage}`,
-        components: newSpell.suggestions.length > 0 ? [row] : [],
+        components: queryData.suggestions.length > 0 ? [row] : [],
       });
     } else {
-      const data = await newSpell.exact;
+      const data = await queryData.exact;
       const desc = data?.desc[0].replace(/(\r\n|\n|\r)/gm, " ");
       const school = data?.school?.name;
       const comp = data?.components;
@@ -124,6 +124,6 @@ module.exports = {
         await interaction.editReply({ embeds: embedArr });
       }
     }
-    return newSpell;
+    return queryData;
   },
 };
